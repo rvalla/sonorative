@@ -1,0 +1,8 @@
+{
+	"inPath": "input/testing/",
+	"outPath": "output/testing/",
+	"inFile": "testing_5g.jpg",
+  "outFile": "testing_5g",
+	"sampleRate": 44100,
+	"mode": "both"
+}
