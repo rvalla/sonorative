@@ -1,4 +1,4 @@
-![icon](https://gitlab.com/azarte/pixelative/-/raw/master/assets/img/icon_64.png)
+![icon](https://gitlab.com/azarte/sonorative/-/raw/master/assets/img/icon_64.png)
 
 # sonorative
 
