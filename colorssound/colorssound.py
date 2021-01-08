@@ -1,4 +1,4 @@
-import os
+import math
 import time as tm
 import numpy as np
 import json as js
@@ -14,6 +14,7 @@ class ColorsSound():
 		self.outPath = None
 		self.outFile = None
 		self.mode = None
+		self.direction = None
 		self.imagedata = None
 		self.imagesize = []
 		self.audiosr = None
@@ -21,24 +22,38 @@ class ColorsSound():
 		self.audiodata = None
 		ColorsSound.setConfig(self, self.config)
 		print(self)
-		ColorsSound.run(self)
+		if self.mode == "amplitude":
+			ColorsSound.runAmp(self)
+		elif self.mode == "frequency":
+			ColorsSound.runFreq(self)
 		self.audiomax = ColorsSound.getMaxAmplitude(self.audiodata)
 		ColorsSound.save(self.outPath, self.outFile, self.audiosr, self.audiodata, self.audiomax)
 		print("-- time needed for extracting the mistery sound: " + \
 				ColorsSound.getWorkingTime(self.starttime, tm.time()))
 
-	def run(self):
+	def runAmp(self):
 		self.starttime = tm.time()
-		if self.mode == "horizontal":
-			ColorsSound.map(self.imagedata, self.audiodata, 0)
-		elif self.mode == "vertical":
-			ColorsSound.map(self.imagedata, self.audiodata, 1)
-		elif self.mode == "both":
-			ColorsSound.map(self.imagedata, self.audiodata, 2)
+		if self.direction == "horizontal":
+			ColorsSound.mapAmp(self.imagedata, self.audiodata, 0)
+		elif self.direction == "vertical":
+			ColorsSound.mapAmp(self.imagedata, self.audiodata, 1)
+		elif self.direction == "both":
+			ColorsSound.mapAmp(self.imagedata, self.audiodata, 2)
 		else:
 			print("-- I don't know what to do with this mode...", end="\n")
 
-	def map(idata, adata, mode):
+	def runFreq(self):
+		self.starttime = tm.time()
+		if self.direction == "horizontal":
+			ColorsSound.mapFreq(self.imagedata, self.audiodata, 0)
+		elif self.direction == "vertical":
+			ColorsSound.mapFreq(self.imagedata, self.audiodata, 1)
+		elif self.direction == "both":
+			ColorsSound.mapFreq(self.imagedata, self.audiodata, 2)
+		else:
+			print("-- I don't know what to do with this mode...", end="\n")
+
+	def mapAmp(idata, adata, mode):
 		print("-- mapping colors to amplitude...", end="\r")
 		w = idata.shape[0]
 		h = idata.shape[1]
@@ -69,6 +84,37 @@ class ColorsSound():
 			print("-- something strange happens with pixel's data...")
 			return 0
 
+	def mapFreq(idata, adata, mode):
+		print("-- mapping colors to amplitude...", end="\r")
+		w = idata.shape[0]
+		h = idata.shape[1]
+		for x in range(w):
+			for y in range(h):
+				if mode == 0:
+					s = x * h + y
+					adata[s] +=  ColorsSound.getFreqAmplitude(idata[x][y])
+				elif mode == 1:
+					s = x + y * w
+					adata[s] -= ColorsSound.getFreqAmplitude(idata[x][y])
+				elif mode == 2:
+					s = x * h + y
+					adata[s] += ColorsSound.getFreqAmplitude(idata[x][y])
+					s = x + y * w
+					adata[s] -= ColorsSound.getFreqAmplitude(idata[x][y])
+		print("-- audio data is ready!             ", end= "\n")
+
+	def getFreqAmplitude(pixeldata):
+		if isinstance(pixeldata,np.ndarray):
+			a = math.sin(pixeldata[0] * 4) + math.sin(pixeldata[1] * 8) + math.sin(pixeldata[2] * 16)
+			a = a
+			return a
+		elif isinstance(pixeldata,np.uint8):
+			a = math.sin(pixeldata * 4)
+			return a
+		else:
+			print("-- something strange happens with pixel's data...")
+			return 0
+
 	def getMaxAmplitude(adata):
 		return np.amax(np.absolute(adata))
 
@@ -79,6 +125,7 @@ class ColorsSound():
 
 	def setConfig(self, data):
 		self.mode = data["mode"]
+		self.direction = data["direction"]
 		self.outPath = data["outPath"]
 		self.outFile = data["outFile"]
 		self.imagedata = np.array(im.open(data["inPath"] + data["inFile"]))

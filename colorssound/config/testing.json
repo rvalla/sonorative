@@ -1,8 +1,9 @@
 {
 	"inPath": "input/testing/",
 	"outPath": "output/testing/",
-	"inFile": "testing_5g.jpg",
-  "outFile": "testing_5g",
+	"inFile": "testing_3.jpg",
+  "outFile": "testing_3f",
 	"sampleRate": 44100,
-	"mode": "both"
+	"direction": "horizontal",
+	"mode": "frequency"
 }
