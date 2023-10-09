@@ -1,0 +1,11 @@
+{
+	"inPath": "input/landscapes/",
+	"outPath": "output/landscapes/",
+	"inFile": "landscape_02.jpg",
+	"outFile": "landscape_02",
+	"sampleRate": 44100,
+	"direction": "vertical",
+	"mode": "frequency",
+    "fModeFactor": 80,
+	"partials": "110,220,440"
+}

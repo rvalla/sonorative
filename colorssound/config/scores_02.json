@@ -1,0 +1,11 @@
+{
+	"inPath": "input/scores/",
+	"outPath": "output/scores/",
+	"inFile": "scores_02.jpg",
+	"outFile": "scores_02",
+	"sampleRate": 44100,
+	"direction": "vertical",
+	"mode": "frequency",
+    "fModeFactor": 100,
+	"partials": "220,440,880"
+}

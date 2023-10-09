@@ -1,9 +1,11 @@
 {
 	"inPath": "input/testing/",
 	"outPath": "output/testing/",
-	"inFile": "testing_3.jpg",
-  "outFile": "testing_3f",
+	"inFile": "malena.jpg",
+	"outFile": "testing_12",
 	"sampleRate": 44100,
-	"direction": "horizontal",
-	"mode": "frequency"
+	"direction": "vertical",
+	"mode": "spectral",
+	"fModeFactor": 30,
+	"partials": "220,440,880"
 }

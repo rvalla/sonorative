@@ -1,0 +1,11 @@
+{
+	"inPath": "input/testing/",
+	"outPath": "output/testing/",
+	"inFile": "malena.jpg",
+	"outFile": "testing_12b",
+	"sampleRate": 44100,
+	"direction": "horizontal",
+	"mode": "spectral",
+    "fModeFactor": 30,
+	"partials": "220,440,880"
+}
